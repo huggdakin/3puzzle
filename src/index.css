@@ -1,0 +1,957 @@
+@import "@fontsource-variable/unbounded";
+@import "tailwindcss";
+
+@theme inline {
+  /* Единый шрифт всей игры как в LUMEN — Unbounded (плотные насыщенные начертания, без тонких) */
+  --font-display: "Unbounded", "Unbounded Variable", system-ui, sans-serif;
+  --font-body: "Unbounded", "Unbounded Variable", system-ui, sans-serif;
+  --font-sans: "Unbounded", "Unbounded Variable", system-ui, sans-serif;
+
+  /* Палитра LUMEN */
+  --color-ink-950: #04030c;
+  --color-ink-900: #080718;
+  --color-ink-800: #0d0b24;
+  --color-ink-700: #161238;
+  --color-ink-600: #221b52;
+
+  --color-ember-200: #ffe9b8;
+  --color-ember-300: #ffd166;
+  --color-ember-400: #ffb03a;
+  --color-ember-500: #f2820f;
+
+  --color-sonar-200: #b6fff0;
+  --color-sonar-300: #6ef7d8;
+  --color-sonar-400: #23e0b6;
+  --color-sonar-500: #0fb494;
+
+  --color-flash-200: #fffbd1;
+  --color-flash-300: #fff29a;
+  --color-flash-400: #ffe45c;
+
+  --color-hot-300: #ff7aa8;
+  --color-hot-400: #ff2f74;
+  --color-hot-500: #d8125a;
+
+  --color-myst-300: #c3aaff;
+  --color-myst-400: #8b62ff;
+  --color-myst-500: #6a3cf0;
+
+  /* Семантические токены игры, привязанные к палитре LUMEN */
+  --color-ink: var(--ink);
+  --color-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-panel: var(--panel);
+  --color-solid: var(--panel-solid);
+  --color-line: var(--panel-line);
+
+  --color-grape: #8b62ff;
+  --color-grape-deep: #6a3cf0;
+  --color-sun: #ffd166;
+  --color-sun-deep: #ffb03a;
+  --color-candy: #ff2f74;
+  --color-candy-deep: #d8125a;
+  --color-mint: #23e0b6;
+  --color-mint-deep: #0fb494;
+  --color-sky: #6ef7d8;
+  --color-sky-deep: #23e0b6;
+  --color-lava: #f2820f;
+}
+
+/* Тёмная тема LUMEN (по умолчанию) */
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f4f2ff;
+  --ink-soft: #d2cbf0;
+  --muted: #948ab8;
+  --panel: rgba(8, 7, 24, 0.92);
+  --panel-solid: #0d0b24;
+  --panel-edge: rgba(255, 255, 255, 0.2);
+  --panel-line: rgba(195, 170, 255, 0.16);
+  --panel-drop: rgba(4, 3, 12, 0.85);
+  --tray: #080718;
+  --tray-2: #04030c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Светлая вариация в духе кристаллического спектра LUMEN */
+html[data-theme="light"] {
+  color-scheme: light;
+  --ink: #120e2e;
+  --ink-soft: #332a63;
+  --muted: #625699;
+  --panel: rgba(246, 243, 255, 0.93);
+  --panel-solid: #ffffff;
+  --panel-edge: rgba(139, 98, 255, 0.3);
+  --panel-line: rgba(22, 18, 56, 0.15);
+  --panel-drop: rgba(8, 7, 24, 0.22);
+  --tray: #161238;
+  --tray-2: #080718;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #04030c;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 600; /* минимальная насыщенность текста как в LUMEN — никаких тонких начертаний */
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Даже если где-то задан лёгкий вес — поднимаем до плотного как в LUMEN */
+.font-thin,
+.font-extralight,
+.font-light,
+.font-normal,
+.font-medium {
+  font-weight: 600 !important;
+}
+
+::selection {
+  background: #ffd166;
+  color: #04030c;
+}
+
+/* Чужие плашки-холдеры хостинга не должны висеть поверх игры */
+[class*="arena" i],
+[id*="arena" i],
+[class*="built-with" i],
+[class*="watermark" i],
+[class*="made-with" i] {
+  display: none !important;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.tnum,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.stroke-title {
+  color: #ffe9b8;
+  -webkit-text-stroke: 0;
+  text-shadow:
+    0 2px 0 rgba(4, 3, 12, 0.95),
+    0 0 26px rgba(255, 176, 58, 0.55),
+    0 0 60px rgba(255, 176, 58, 0.25);
+}
+
+.ui-shadow {
+  text-shadow:
+    0 1px 2px rgba(4, 3, 12, 0.95),
+    0 0 12px rgba(4, 3, 12, 0.7);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 99px;
+}
+
+/* ───────────── Слои живой неоновой подложки LUMEN ───────────── */
+@keyframes beams {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.layer-grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.5) 0.5px, transparent 0.6px);
+  background-size: 3px 3px;
+  opacity: 0.05;
+}
+
+.layer-beams {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 176, 58, 0.16) 18deg,
+    transparent 40deg,
+    transparent 150deg,
+    rgba(35, 224, 182, 0.14) 172deg,
+    transparent 200deg,
+    transparent 300deg,
+    rgba(139, 98, 255, 0.14) 322deg,
+    transparent 360deg
+  );
+  animation: beams 44s linear infinite;
+}
+
+.layer-hatch {
+  background-image: repeating-linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.042) 0 1px,
+    transparent 1px 13px
+  );
+}
+
+.world-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 18%, #161238 0%, #080718 52%, #04030c 100%);
+}
+
+.world-bg__img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: 50% 44%;
+  background-repeat: no-repeat;
+  will-change: transform;
+  opacity: 0.34;
+  filter: brightness(0.55) contrast(1.18) saturate(1.2) hue-rotate(-8deg);
+  animation: bg-breathe 36s ease-in-out infinite alternate;
+  transition: filter 0.45s ease, opacity 0.45s ease;
+}
+
+@media (max-width: 767px) {
+  .world-bg__img {
+    background-position: 50% 38%;
+  }
+}
+
+html[data-theme="light"] .world-bg__img {
+  opacity: 0.55;
+  filter: brightness(0.85) contrast(1.08) saturate(1.15);
+}
+
+.world-bg__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 55% at 50% 0%, rgba(255, 176, 58, 0.16), transparent 68%),
+    radial-gradient(65% 50% at 85% 20%, rgba(35, 224, 182, 0.12), transparent 65%),
+    radial-gradient(70% 55% at 15% 80%, rgba(139, 98, 255, 0.15), transparent 70%),
+    linear-gradient(
+      180deg,
+      rgba(4, 3, 12, 0.62) 0%,
+      rgba(8, 7, 24, 0.42) 45%,
+      rgba(4, 3, 12, 0.86) 100%
+    );
+}
+
+html[data-theme="light"] .world-bg__veil {
+  background:
+    radial-gradient(85% 55% at 50% 0%, rgba(255, 176, 58, 0.22), transparent 70%),
+    radial-gradient(70% 55% at 80% 25%, rgba(139, 98, 255, 0.16), transparent 68%),
+    linear-gradient(
+      180deg,
+      rgba(13, 11, 36, 0.35) 0%,
+      rgba(13, 11, 36, 0.15) 42%,
+      rgba(8, 7, 24, 0.52) 100%
+    );
+}
+
+.world-bg__topo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@keyframes bg-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.03);
+  }
+}
+
+.fx-mote {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 12px 3px currentColor;
+  animation: mote-float var(--dur, 7s) ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes mote-float {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate3d(0, 0, 0) scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate3d(0, -16px, 0) scale(1.3);
+  }
+}
+
+/* ───────────── Панели и кнопки в стиле LUMEN (скошенные углы + неоновый контур) ───────────── */
+.panel {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 0;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 16px 40px -14px var(--panel-drop),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Декоративные уголки-скобы как в компоненте Panel из LUMEN */
+.panel::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 1.5px solid rgba(255, 209, 102, 0.45);
+  border-top: 1.5px solid rgba(255, 209, 102, 0.45);
+}
+
+.panel::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border-left: 1.5px solid rgba(35, 224, 182, 0.45);
+  border-bottom: 1.5px solid rgba(35, 224, 182, 0.45);
+}
+
+.panel-flat {
+  position: relative;
+  background: color-mix(in srgb, var(--panel-solid) 86%, transparent);
+  border: 1px solid var(--panel-line);
+  border-radius: 0;
+  clip-path: polygon(
+    9px 0,
+    100% 0,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    0 100%,
+    0 9px
+  );
+}
+
+.btn {
+  --bg: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
+  --glow: rgba(255, 176, 58, 0.35);
+  --fg: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0;
+  clip-path: polygon(
+    11px 0,
+    100% 0,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    0 100%,
+    0 11px
+  );
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  overflow: hidden;
+  box-shadow: 0 10px 34px -12px var(--glow);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1.5px);
+  box-shadow: 0 14px 42px -10px var(--glow);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+}
+
+.btn:focus-visible {
+  outline: 2px solid #ffd166;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  filter: grayscale(0.55);
+  opacity: 0.48;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 32%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.36),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.btn-shine::after {
+  animation: sheen 3.2s ease-in-out infinite;
+}
+
+.btn:hover:not(:disabled)::after {
+  animation: sheen 0.85s ease-out 1;
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  60%,
+  100% {
+    transform: translateX(340%) skewX(-18deg);
+  }
+}
+
+/* Primary Ember (как главная кнопка в LUMEN) */
+.btn-sun {
+  --bg: linear-gradient(90deg, #ffd166 0%, #ffb03a 52%, #f2820f 100%);
+  --glow: rgba(255, 176, 58, 0.9);
+  --fg: #04030c;
+  border-color: rgba(255, 233, 184, 0.65);
+}
+
+/* Reward Sonar-Myst (как акцентная кнопка в LUMEN) */
+.btn-grape {
+  --bg: linear-gradient(90deg, #23e0b6 0%, #8b62ff 52%, #6a3cf0 100%);
+  --glow: rgba(139, 98, 255, 0.9);
+  --fg: #ffffff;
+  border-color: rgba(195, 170, 255, 0.48);
+}
+
+/* Sonar Mint */
+.btn-mint {
+  --bg: linear-gradient(90deg, #6ef7d8 0%, #23e0b6 55%, #0fb494 100%);
+  --glow: rgba(35, 224, 182, 0.85);
+  --fg: #04030c;
+  border-color: rgba(182, 255, 240, 0.6);
+}
+
+/* Hot Shard */
+.btn-candy {
+  --bg: linear-gradient(90deg, #ff7aa8 0%, #ff2f74 52%, #d8125a 100%);
+  --glow: rgba(255, 47, 116, 0.85);
+  --fg: #ffffff;
+  border-color: rgba(255, 122, 168, 0.55);
+}
+
+/* Sonar Sky */
+.btn-sky {
+  --bg: linear-gradient(90deg, #b6fff0 0%, #6ef7d8 48%, #23e0b6 100%);
+  --glow: rgba(110, 247, 216, 0.85);
+  --fg: #04030c;
+  border-color: rgba(182, 255, 240, 0.65);
+}
+
+/* Ghost / Glass (как ghost-кнопка в LUMEN) */
+.btn-glass {
+  --bg: color-mix(in srgb, var(--panel-solid) 88%, rgba(255, 255, 255, 0.07));
+  --glow: rgba(139, 98, 255, 0.2);
+  --fg: var(--ink);
+  border-color: var(--panel-edge);
+}
+
+.btn-sm {
+  min-height: 36px;
+  padding: 0 0.8rem;
+  font-size: 0.74rem;
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  clip-path: polygon(
+    7px 0,
+    100% 0,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0 100%,
+    0 7px
+  );
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--panel-solid) 90%, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--panel-edge);
+  color: var(--ink);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffd166;
+}
+
+html[data-theme="light"] .eyebrow {
+  color: #5b2be0;
+}
+
+/* В светлой теме лазурный (text-sonar-300) и светлые акценты на светлых панелях делаем контрастным глубоким цветом */
+html[data-theme="light"] .panel .text-sonar-300:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]),
+html[data-theme="light"] .panel-flat .text-sonar-300:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]) {
+  color: #5b2be0 !important;
+}
+
+html[data-theme="light"] .panel .text-sonar-300 .bg-sonar-400 {
+  background-color: #5b2be0 !important;
+}
+
+html[data-theme="light"] .panel span.text-sonar-300[class*="bg-sonar-400"] {
+  border-color: rgba(91, 43, 224, 0.35) !important;
+  background-color: rgba(91, 43, 224, 0.12) !important;
+}
+
+html[data-theme="light"] .panel .text-ember-200:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]),
+html[data-theme="light"] .panel-flat .text-ember-200:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]),
+html[data-theme="light"] .panel .text-myst-300,
+html[data-theme="light"] .panel-flat .text-myst-300 {
+  color: #5b2be0 !important;
+}
+
+html[data-theme="light"] .panel .text-ember-300:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]),
+html[data-theme="light"] .panel-flat .text-ember-300:not([class*="bg-[#04030c]"]):not([class*="bg-[#080718]"]),
+html[data-theme="light"] .btn-glass .text-ember-300 {
+  color: #d96506 !important;
+}
+
+html[data-theme="light"] .panel .bg-ember-300 {
+  background-color: #f2820f !important;
+}
+
+html[data-theme="light"] .panel .text-hot-300,
+html[data-theme="light"] .panel-flat .text-hot-300 {
+  color: #c80e50 !important;
+}
+
+.bar {
+  height: 7px;
+  clip-path: polygon(
+    4px 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%,
+    0 4px
+  );
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  overflow: hidden;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #ffd166 0%, #ffb03a 38%, #23e0b6 72%, #8b62ff 100%);
+  background-size: 200% 100%;
+  animation: bar-flow 4.5s linear infinite;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes bar-flow {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.title-grad {
+  background: linear-gradient(92deg, #ffe9b8 0%, #ffd166 32%, #6ef7d8 68%, #c3aaff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(255, 176, 58, 0.32));
+}
+
+html[data-theme="light"] .title-grad {
+  background: linear-gradient(92deg, #f2820f 0%, #6a3cf0 54%, #0fb494 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: none;
+}
+
+/* ───────────── Игровое поле 3×3 в эстетике LUMEN ───────────── */
+.board-frame {
+  position: relative;
+  padding: 6px;
+  clip-path: polygon(
+    18px 0,
+    100% 0,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    0 100%,
+    0 18px
+  );
+  background: linear-gradient(135deg, #ffd166 0%, #ffb03a 28%, #23e0b6 64%, #8b62ff 100%);
+  box-shadow:
+    0 20px 50px -12px rgba(4, 3, 12, 0.88),
+    0 0 38px -10px rgba(255, 176, 58, 0.45),
+    0 0 44px -12px rgba(139, 98, 255, 0.45);
+}
+
+.board-tray {
+  position: relative;
+  clip-path: polygon(
+    15px 0,
+    100% 0,
+    100% calc(100% - 15px),
+    calc(100% - 15px) 100%,
+    0 100%,
+    0 15px
+  );
+  background:
+    radial-gradient(circle at 50% 42%, rgba(139, 98, 255, 0.14), transparent 70%),
+    repeating-linear-gradient(
+      118deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 12px
+    ),
+    linear-gradient(160deg, var(--tray), var(--tray-2));
+  box-shadow: inset 0 4px 18px rgba(0, 0, 0, 0.78);
+}
+
+.board-slot {
+  position: absolute;
+  clip-path: polygon(
+    9px 0,
+    100% 0,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    0 100%,
+    0 9px
+  );
+  border: 1.5px dashed rgba(110, 247, 216, 0.28);
+  background: radial-gradient(circle, rgba(35, 224, 182, 0.08), rgba(8, 7, 24, 0.4));
+}
+
+.tile {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background-repeat: no-repeat;
+  box-shadow:
+    0 4px 0 rgba(4, 3, 12, 0.8),
+    0 10px 18px -6px rgba(0, 0, 0, 0.7);
+  outline: none;
+  touch-action: manipulation;
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), transparent 36%);
+  pointer-events: none;
+}
+
+.tile.is-home {
+  border-color: #ffd166;
+  box-shadow:
+    0 3px 0 rgba(4, 3, 12, 0.75),
+    0 0 0 2px rgba(255, 209, 102, 0.9),
+    0 0 16px 2px rgba(255, 176, 58, 0.55);
+}
+
+.tile.is-hint-next {
+  border-color: #23e0b6;
+  box-shadow:
+    0 3px 0 rgba(4, 3, 12, 0.75),
+    0 0 0 2.5px #6ef7d8,
+    0 0 20px 4px rgba(35, 224, 182, 0.75);
+}
+
+.tile.is-movable:hover {
+  filter: brightness(1.08);
+}
+
+.board-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.board-shine::after {
+  content: "";
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(255, 233, 184, 0.85) 50%,
+    transparent 64%
+  );
+  animation: board-sweep 1.1s ease-out 0.35s both;
+}
+
+@keyframes board-sweep {
+  from {
+    transform: translateX(-70%);
+  }
+  to {
+    transform: translateX(70%);
+  }
+}
+
+.spark {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  clip-path: polygon(
+    50% 0,
+    62% 38%,
+    100% 50%,
+    62% 62%,
+    50% 100%,
+    38% 62%,
+    0 50%,
+    38% 38%
+  );
+  background: #ffd166;
+  filter: drop-shadow(0 0 6px #ffb03a);
+  pointer-events: none;
+  z-index: 25;
+  animation: spark-fly 0.75s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes spark-fly {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.35) rotate(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0.18) rotate(180deg);
+  }
+}
+
+/* ───────────── Анимации интерфейса LUMEN ───────────── */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-pop {
+  animation: pop-in 0.36s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-beat {
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, -30px, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dx, 0px), 520px, 0) rotate(var(--rot, 540deg));
+  }
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  width: 9px;
+  height: 15px;
+  border-radius: 2px;
+  animation: confetti-fall var(--dur, 2.6s)
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--delay, 0s) both;
+}
+
+@keyframes coin-float {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 6px) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -2px) scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -24px) scale(0.96);
+  }
+}
+
+.coin-float {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffe9b8;
+  text-shadow:
+    0 2px 0 #04030c,
+    0 0 12px rgba(255, 176, 58, 0.95);
+  animation: coin-float 1.25s ease-out forwards;
+  z-index: 60;
+}
+
+@keyframes glow-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 176, 58, 0.75);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 176, 58, 0);
+  }
+}
+
+.glow-ring {
+  animation: glow-ring 1.8s ease-out infinite;
+}
+
+@keyframes star-pop {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.3) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.star-pop {
+  animation: star-pop 0.55s cubic-bezier(0.2, 1.2, 0.4, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
